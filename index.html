@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Araceli Ponce Sanga</title>
+
+  <!-- Meta Tags -->
+  <meta name="description" content="Desarrolladora web, transformando aprendizajes en realidades." />
+  <meta name="keywords" content="desarrollador web tacna, desarrollador web, diseño de páginas web, tacna, página web," />
+  <meta name="author" content="Araceli Ponce Sanga" />
+  <meta name="robots" content="index, follow" /> <!-- Control search engine crawling behavior -->
+
+  <!-- Open Graph Meta Tags (for social media sharing) -->
+  <meta property="og:title" content="Araceli Ponce Sanga" />
+  <meta property="og:description" content="Desarrolladora web." />
+  <meta property="og:image" content="og.png" /> <!-- Image for sharing 1200x630 -->
+  <meta property="og:url" content="https://araceliponce.github.io/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags (for Twitter sharing) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Araceli Ponce Sanga" />
+  <meta name="twitter:description" content="Desarrolladora web." />
+  <meta name="twitter:image" content="og.png" />
+
+  <!-- <link rel="canonical" href="https://araceliponce.github.io/" /> -->
+
+  <!-- <meta http-equiv="Cache-Control" content="max-age=3600"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJRXW67S50"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MJRXW67S50');
+  </script>
+
+
+  <!-- <link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet" /> -->
+  <!-- <script src="node_modules/gridstack/dist/gridstack-all.js"></script> -->
+
+  <script type="module" crossorigin src="/assets/main-c2693918.js"></script>
+  <link rel="stylesheet" href="/assets/index-7d4dfd66.css">
+</head>
+
+<body class="summer">
+  <div id="app"></div>
+  
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script> -->
+
+
+  
+
+
+
+  <script>
+    // Define the media query for a min-width of 768px
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+
+    function handleMediaQueryChange(event) {
+      // if window width is at least 768px
+      if (event.matches) {
+        // and if the body has the class .nav-is-visible
+        if (document.body.classList.contains('nav-is-visible')) {
+          // Remove it
+          document.body.classList.remove('nav-is-visible');
+        }
+      }
+    }
+
+    // Add a listener to the media query
+    mediaQuery.addListener(handleMediaQueryChange);
+
+    // Initial check when the script runs
+    handleMediaQueryChange(mediaQuery);
+
+
+
+    const CONTROLS = document.querySelectorAll(".btn--custom");
+    const UPDATE = ({ x, y }) => {
+
+      const ELEMENT = document.elementFromPoint(x, y);
+      const CONTROL = ELEMENT.closest(".btn--custom");
+      if (CONTROL) {
+        console.info('doing it')
+        const BOUNDS = CONTROL.getBoundingClientRect()
+        CONTROL.style.setProperty("--rx", (x - BOUNDS.x) / BOUNDS.width);
+        CONTROL.style.setProperty("--x", (x - BOUNDS.x) / BOUNDS.width);
+        CONTROL.style.setProperty("--y", (y - BOUNDS.y) / BOUNDS.height);
+      }
+    };
+
+    document.body.addEventListener("pointermove", UPDATE);
+
+  </script>
+
+
+  <script>
+    /* Threshold is a number between 0 and 1, that represents the viewable area of the target element in the screen. For example, 0 represents no area of element is visible. A value of 0.10 represents about 10% area is viewable in the screen. Value of 1 means element is fully viewable in the screen. */
+
+
+    const schemas = ['spring', 'summer', 'fall', 'winter'];
+    let contenedor, elementos;
+
+ 
+    window.addEventListener('DOMContentLoaded', () => {
+      const canHover = !(matchMedia('(hover: none)').matches);
+      if (canHover) {
+        document.body.classList.add('can-hover');
+      }
+
+
+
+      contenedor = document.querySelector('#colors');
+      elementos = document.querySelectorAll('#colors>*');
+      // console.log(elementos)
+
+      // If body is .can-hover listen to click, if not then watchs wich one is visible on scroll
+
+      if (document.body.classList.contains('can-hover')) {
+        console.log('body can hover')
+        elementos.forEach(el => {
+          el.addEventListener('click', () => {
+            // alert('click')
+
+            // console.log(el.classList); // "media-group", "winter"
+            document.body.className = el.classList[1] + ' can-hover';
+          });
+        });
+
+      } else {
+
+        detectVisibleElement();
+        contenedor.addEventListener('scroll', detectVisibleElement);
+      }
+
+
+
+
+      // btn toggle for nav
+      const navToggle = document.getElementById('navToggle');
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          document.body.classList.toggle('nav-is-visible')
+        })
+      }
+
+
+    });
+
+
+
+
+
+
+    function detectVisibleElement() {
+      const containerRect = contenedor.getBoundingClientRect();
+      elementos.forEach((element, index) => {
+        const elementRect = element.getBoundingClientRect();
+        if (
+          elementRect.left >= containerRect.left &&
+          elementRect.right <= containerRect.right
+        ) {
+          // alert(`Elemento ${index + 1} es visible.`);
+          // console.log(`Elemento ${index + 1} es visible.`);
+          document.body.className = schemas[index] + ' can-hover';
+         
+
+        }
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+</body>
+
+</html>
