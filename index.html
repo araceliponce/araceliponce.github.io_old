@@ -49,8 +49,8 @@
   <!-- <link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet" /> -->
   <!-- <script src="node_modules/gridstack/dist/gridstack-all.js"></script> -->
 
-  <script type="module" crossorigin src="/assets/main-ee1ef785.js"></script>
-  <link rel="stylesheet" href="/assets/index-5f165b0f.css">
+  <script type="module" crossorigin src="/assets/main-4627b2dd.js"></script>
+  <link rel="stylesheet" href="/assets/index-09471265.css">
 </head>
 
 <body class="summer">
@@ -62,7 +62,71 @@
 
   
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
 
+  const navigationLinks = document.querySelectorAll('.desktop .is-a-link');
+
+  function removeActiveClass() {
+    navigationLinks.forEach((link) => {
+      link.classList.remove('is-active');
+    });
+  }
+
+  function addActiveClass(clickedLink) {
+    clickedLink.classList.add('is-active');
+  }
+
+  function updateActiveLink() {
+    const sections = document.querySelectorAll('section');
+    let currentSectionId = '';
+  const margin = 120; // Para activar la sección un poco antes
+
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top - margin <= 0 && rect.bottom + margin >= 0) {
+      currentSectionId = section.id;
+    }
+  });
+
+      //Remueve .is-active de los demas links y la añade al link que referencia a la seccion actual
+      removeActiveClass();
+
+    navigationLinks.forEach((link) => {
+      if (link.getAttribute('href').substring(1) === currentSectionId) {
+        link.classList.add('is-active');
+      }
+    });
+  }
+
+  // navigationLinks.forEach((link) => {
+  //   link.addEventListener('click', (event) => {
+
+  //     //Remueve .is-active de los demas links y la añade al link clickeado
+  //     removeActiveClass();
+  //     addActiveClass(link);
+  //   });
+  // });
+
+  let animationFrameId = null;
+  function handleScroll() {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+
+    animationFrameId = requestAnimationFrame(updateActiveLink);
+  }
+
+  window.addEventListener('scroll', handleScroll);
+
+  // Llamado en domload
+  updateActiveLink();
+});
+
+
+
+
+</script>
 
   <script>
     // Define the media query for a min-width of 768px
